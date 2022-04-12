@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>sample</title>
+</head>
+<body>
+  
+  <script>
+    const num = [1,2,3,4,5]
+    // let result = num.reduce(function(){},0)
+    let result = num.reduce((hap,item,i) => {
+      console.log(`${hap += item} , ${i}`);
+      return hap;
+    },20)
+
+    console.log('마지막의 값', result)
+  </script>
+
+<!-- 카트(장바구니)에서 많이 쓰임. -->
+</body>
+</html>

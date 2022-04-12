@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+  <link rel="stylesheet" href="./css/shop.css">
+  <script defer src="https://unpkg.com/vue@next"></script>
+  <script defer src="./js/intex.js"></script>
+  <title>shop</title>
+</head>
+<body>
+  <article id="app">  
+    <!-- header -->
+    <header>
+      <dl>
+        <dt>구매상품</dt>
+        <dd>{{won(cartTotal)}} 원</dd>
+        <dd>
+          <button @click="displayCart = !displayCart">장바구니 보기 {{cart.length}}
+            <span>갯수</span>
+          </button>
+          <ul v-if="displayCart">
+            <li v-for="(item,index) in cart" :key="index"> {{item.name}} : {{won(item.price)}} 원 </li>
+            <!-- <li> name : price 원 </li>
+            <li> name : price 원 </li> -->
+          </ul>
+        </dd>
+      </dl>
+    </header>
+
+    <!-- div#box -->
+    <!-- 상품 선택 -->
+    <div id="box">
+      <!-- 선택 : 가격 설정 -->
+      <ul class="form">
+        <li>
+          <span>
+            <label for="userMax">최고가격</label>
+            <input id="userMax" readonly v-model="max">
+          </span>
+          <span>
+            선택상품 갯수 : {{filterProducts.length}}
+          </span>
+        </li>
+        <li>
+          <input type="range" min="0" max="30000" v-model="max">
+        </li>
+        <li>
+          <input type="checkbox" id="userLabel" v-model="displayLabel">
+          <label for="userLabel">라벨보기</label>
+        </li>
+      </ul>
+
+      <!-- 제품 리스트 -->
+      <ul class="list">
+        <li v-for="(item,index) in filterProducts" :key="index">
+          <figure>
+            <img :src="item.image" :alt="item.name">
+            <figcaption>
+              <dl>
+                <dt>{{item.name}}</dt>
+                <dd>{{item.description}}</dd>
+                <dd>
+                  <span class="blue" v-if="item.price > 15000 && displayLabel">premier</span>
+                  <span class="red" v-else-if="(item.price <= 15000 && item.price > 5000) && displayLabel">value</span>
+                  <span class="green" v-else-if="item.price <= 5000 && displayLabel">sale</span>
+                </dd>
+                <!-- <dd>레벨</dd> -->
+                <dd>{{won(item.price)}}원</dd>
+              </dl>
+            </figcaption>
+          </figure>
+          <p><button @click="addToCart(item)">+</button></p>
+        </li>
+      </ul>
+    </div>
+  </article>
+</body>
+</html>
